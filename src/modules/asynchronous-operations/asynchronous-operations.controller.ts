@@ -8,9 +8,7 @@ export class AsynchronousOperationsController {
   @Get('download')
   async downloadContents() {
     const urlsToDownload = [
-      'https://example.com/api/data1',
-      'https://example.com/api/data2',
-      'https://example.com/api/data3',
+      'https://picsum.photos/id/237/200/300',
     ];
 
     try {

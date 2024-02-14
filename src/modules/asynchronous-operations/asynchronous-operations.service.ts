@@ -7,8 +7,12 @@ export class AsynchronousOperationsService {
   async downloadContentsFromUrls(urls: string[]): Promise<string[]> {
     try {
       const downloadPromises = urls.map(async (url) => {
-        const response = await this.httpService.get(url).toPromise();
-        return response.data;
+        const response = await this.httpService.get(url, { responseType: 'arraybuffer' }).toPromise();
+
+        // Convert the response data to base64
+        const base64Data = Buffer.from(response.data).toString('base64');
+
+        return base64Data;
       });
 
       return await Promise.all(downloadPromises);
