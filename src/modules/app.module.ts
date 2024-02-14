@@ -12,6 +12,7 @@ import {APP_INTERCEPTOR} from "@nestjs/core";
 import {AsynchronousOperationsService} from "./asynchronous-operations/asynchronous-operations.service";
 import {HttpModule} from "@nestjs/axios";
 import { ApiFetchModule } from './api-fetch/api-fetch.module';
+import { FileListingModule } from './file-listing/file-listing.module';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { ApiFetchModule } from './api-fetch/api-fetch.module';
 
     AsynchronousOperationsModule,
     ApiFetchModule,
+    FileListingModule,
   ],
   controllers: [],
   providers: [
