@@ -11,6 +11,7 @@ import {HttpErrorInterceptor} from "../../interceptor/http-error.interceptor";
 import {APP_INTERCEPTOR} from "@nestjs/core";
 import {AsynchronousOperationsService} from "./asynchronous-operations/asynchronous-operations.service";
 import {HttpModule} from "@nestjs/axios";
+import { ApiFetchModule } from './api-fetch/api-fetch.module';
 
 @Module({
   imports: [
@@ -58,6 +59,7 @@ import {HttpModule} from "@nestjs/axios";
     }),
 
     AsynchronousOperationsModule,
+    ApiFetchModule,
   ],
   controllers: [],
   providers: [

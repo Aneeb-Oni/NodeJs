@@ -1,10 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
 import { AsynchronousOperationsService } from './asynchronous-operations.service';
+import {ApiTags} from "@nestjs/swagger";
 
 @Controller('asynchronous-operations')
 export class AsynchronousOperationsController {
   constructor(private readonly asynchronousOperationsService: AsynchronousOperationsService) {}
 
+  @ApiTags('asynchronous-operations')
   @Get('download')
   async downloadContents() {
     const urlsToDownload = [
