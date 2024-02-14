@@ -13,11 +13,6 @@ export class updateUserDto {
   name: string;
 
   @ApiProperty({ type: String, required: true })
-  @IsString()
-  @IsNotEmpty()
-  username: string;
-
-  @ApiProperty({ type: String, required: true })
   @IsEmail()
   @IsNotEmpty()
   email: string;
