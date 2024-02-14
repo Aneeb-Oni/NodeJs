@@ -45,11 +45,6 @@ export class UsersService {
     return this.usersRepository.createUser(user);
   }
 
-  async updatePassword(email: string, password: string): Promise<User | null> {
-    return this.usersRepository.updatePassword(email, password);
-  }
-
-
   // get all users
   async getAllUser(): Promise<User[]> {
     const users = await this.usersRepository.getAllUser();
@@ -59,5 +54,13 @@ export class UsersService {
     return users;
   }
 
+  // update user
+  async updateUser(id: string, name: string, email: string) {
+    return this.usersRepository.updateUser(id, name, email);
+  }
 
+  //delete user
+  async deleteUser(id: string): Promise<User | null> {
+    return this.usersRepository.deleteUser(id);
+  }
 }

@@ -3,7 +3,7 @@ import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class AsynchronousOperationsService {
-  constructor(private readonly httpService: HttpService) {}
+  constructor(private readonly httpService: HttpService) { }
   async downloadContentsFromUrls(urls: string[]): Promise<string[]> {
     try {
       const downloadPromises = urls.map(async (url) => {

@@ -17,7 +17,7 @@ async function bootstrap() {
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
   const config = new DocumentBuilder()
-      .setTitle('My Science Land')
+      .setTitle('NodeJsTask')
       .setDescription('The API description')
       .setVersion('1.0')
       .addTag('nestjs')

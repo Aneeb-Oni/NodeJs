@@ -1,10 +1,10 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiFetchService } from './api-fetch.service';
-import {ApiTags} from "@nestjs/swagger";
+import { ApiTags } from "@nestjs/swagger";
 
 @Controller('error-handling')
 export class ApiFetchController {
-  constructor(private readonly apiFetchService: ApiFetchService) {}
+  constructor(private readonly apiFetchService: ApiFetchService) { }
 
   @ApiTags('error-handling')
   @Get(':endpoint')

@@ -1,5 +1,5 @@
 import {
-  Injectable,
+  Injectable, NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -25,6 +25,17 @@ export class UsersRepository {
     user.name = name;
     user.email = email;
     return this.userModel.save(user);
+  }
+
+
+  //delete user with review with likeAndDislike
+  async deleteUser(id: string): Promise<User | null> {
+    const User = await this.userModel.findOne({ where: { id } });
+    if (!User) {
+      throw new NotFoundException('user not found');
+    }
+    const result = await this.userModel.remove(User);
+    return result;
   }
 
   //update user

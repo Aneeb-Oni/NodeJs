@@ -1,11 +1,11 @@
-import {Injectable, Logger} from '@nestjs/common';
-import {HttpService} from "@nestjs/axios";
+import { Injectable, Logger } from '@nestjs/common';
+import { HttpService } from "@nestjs/axios";
 
 @Injectable()
 export class ApiFetchService {
   private readonly logger = new Logger(ApiFetchService.name);
 
-  constructor(private readonly httpService: HttpService) {}
+  constructor(private readonly httpService: HttpService) { }
 
   async fetchDataFromApi(apiEndpoint: string): Promise<any> {
     try {

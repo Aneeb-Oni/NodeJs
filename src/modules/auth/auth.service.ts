@@ -5,9 +5,7 @@ import common_1, {
   ForbiddenException,
   Inject,
   Injectable,
-  NotAcceptableException,
-  NotFoundException,
-  UnauthorizedException,
+  NotAcceptableException, NotFoundException,
 } from '@nestjs/common';
 import { Cache } from 'cache-manager';
 import { UsersService } from '../users/users.service';
@@ -16,17 +14,11 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from '../users/schema/user.schema';
 import JwtTokensInterface from '../../interfaces/jwt-token.interfac';
 import signupUserInterface from './interfaces/signup-user.interface';
-import changeUserPasswordInterface from './interfaces/change-user-password.interface';
-import randomUserTokenInterface from './interfaces/random-user-token.dto';
-import { generateRandomToken } from '../../helpers/randomtoken.helper';
-import * as handlebars from 'handlebars';
-import * as fs from 'fs';
-import changeUserPasswordTokenVerificationInterface from './interfaces/change-user-password-token-verification.interface';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import RefreshTokenDto from './dto/refresh-token.dto';
 import AuthRepository from './auth.repository';
 import DecodedUser from './interfaces/decoded-user.interface';
 import * as process from 'process';
+import updateUserInterface from "./interfaces/update-user.interface";
 
 @Injectable()
 export class AuthService {
@@ -106,39 +98,6 @@ export class AuthService {
     };
   }
 
-  //change user password token verification
-  async tokenVerification(
-    @Body() reqBody: changeUserPasswordTokenVerificationInterface,
-  ) {
-    const user = await this.usersService.findUserByEmail(reqBody.email);
-    if (!user) {
-      throw new NotFoundException('Invalid email');
-    }
-
-    const tokenKey = `forgot-password-token:${user.email}`;
-
-    const cachedToken = await this.cacheManager.get(tokenKey);
-
-    if (!cachedToken) {
-      throw new UnauthorizedException('token expired');
-    }
-
-    const parsedToken = JSON.parse(<string>cachedToken);
-    if (parsedToken.token !== reqBody.token) {
-      throw new UnauthorizedException('Invalid token');
-    } else {
-      parsedToken.active = true;
-      const updatedTokenValue = JSON.stringify(parsedToken);
-      await this.cacheManager.set(tokenKey, updatedTokenValue, { ttl: 5400 });
-    }
-
-    return {
-      statusCode: 201,
-      message: 'Token is active and valid',
-      tokenStatus: true,
-    };
-  }
-
   // profile get
   async getProfile(token: string) {
     const decodedUser: DecodedUser | null = await this.verifyToken(
@@ -195,5 +154,24 @@ export class AuthService {
     const user = await this.usersService.getAllUser();
     return user;
   }
+  // user update
+  async updateUser(
+      updateUser: updateUserInterface,
+  ): Promise<{ message: string; update: updateUserInterface }> {
+    const update = await this.usersService.updateUser(
+        updateUser.id,
+        updateUser.name,
+        updateUser.email,
+    );
+    if (!update) {
+      throw new NotFoundException('invalid user id');
+    }
+    return { message: 'User updated successfully', update };
+  }
 
+  //delete user
+  async deleteUser(id: string): Promise<{ message: string }> {
+    await this.usersService.deleteUser(id);
+    return { message: ' deleted successfully' };
+  }
 }

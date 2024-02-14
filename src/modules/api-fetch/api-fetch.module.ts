@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ApiFetchService } from './api-fetch.service';
 import { ApiFetchController } from './api-fetch.controller';
-import {HttpModule} from "@nestjs/axios";
+import { HttpModule } from "@nestjs/axios";
 
 @Module({
   imports: [
@@ -10,4 +10,4 @@ import {HttpModule} from "@nestjs/axios";
   controllers: [ApiFetchController],
   providers: [ApiFetchService],
 })
-export class ApiFetchModule {}
+export class ApiFetchModule { }
